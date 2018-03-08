@@ -1,0 +1,22 @@
+[{
+    "id": 1,
+    "first_name": "Britney",
+    "last_name": "Shilvock",
+    "email": "bshilvock0@dyndns.org",
+    "gender": "Female",
+    "ip_address": "57.10.236.114"
+  }, {
+    "id": 2,
+    "first_name": "Niels",
+    "last_name": "MacInerney",
+    "email": "nmacinerney1@huffingtonpost.com",
+    "gender": "Male",
+    "ip_address": "238.163.241.58"
+  }, {
+    "id": 3,
+    "first_name": "Agnese",
+    "last_name": "Soar",
+    "email": "asoar2@gov.uk",
+    "gender": "Female",
+    "ip_address": "115.54.240.169"
+  }]

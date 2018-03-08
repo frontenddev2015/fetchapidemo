@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-4 mb-4">Fetch API SANDBOX</h1>
+        <div class="d-flext">
+            <button class="btn btn-primary mr-4" id="myButton">get text</button>
+            <button class="btn btn-success mr-4" id="myButton1">get posts</button>
+            <button class="btn btn-warning mr-4" id="myButton3">get api data</button>
+        </div>
+        <hr/>
+        <div id="output"></div>
+        <form id="addpost">
+            <div class="form-group">
+                <input class="form-control" type="text" id="title" placeholder="title">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="body" placeholder="body"></textarea>
+            </div>
+            <input class="btn btn-secondary" type="submit" value="submit"/>
+        </form>
+    </div>
+    <script>
+        document.getElementById('myButton').addEventListener('click', function(){
+            console.log('hello');
+            fetch('sample.txt').then(function(res){
+                return res.text();
+            }).then(function(data){
+                document.getElementById('output').innerHTML=data;
+            }).catch(function(err){
+                console.log(err);
+            })
+        });
+        document.getElementById('myButton1').addEventListener('click', function(){
+          fetch('users.json').then(function(res){
+              return res.json();
+          }).then(function(data){
+              let output = '<h1 class="mb-4">List of Users</h1>';
+              console.log(data);
+              data.forEach(function(users){
+                output+= `
+                  <ul class="list-group">
+                    <li class="list-group-item">${users.id}</li>
+                    <li class="list-group-item">${users.first_name}</li>
+                    <li class="list-group-item">${users.last_name}</li>
+                    <li class="list-group-item">${users.email}</li>
+                    <li class="list-group-item">${users.gender}</li>
+                    <li class="list-group-item">${users.ip_address}</li>
+                  </ul>
+                `;
+              });
+              document.getElementById('output').innerHTML=output;
+          }).catch(function(err){
+              console.log(err)
+          })
+        });
+        document.getElementById('myButton3').addEventListener('click', function(){
+          fetch('https://jsonplaceholder.typicode.com/posts').then(function(res){
+              return res.json();
+          }).then(function(data){
+              let output = '<h1 class="mb-4">List of Posts</h1>';
+              data.forEach(function(users){
+                output+= `
+                  <ul class="card card-body mb-4">
+                    <h3>${users.title}</h3>
+                    <p>${users.body}</p>
+                  </ul>
+                `;
+              });
+              document.getElementById('output').innerHTML=output;
+          }).catch(function(err){
+              console.log(err)
+          })
+        });
+        document.getElementById('addpost').addEventListener('submit', function(e){
+            e.preventDefault();
+            let title = document.getElementById('title').value;
+            let body = document.getElementById('body').value;
+
+            fetch('https://jsonplaceholder.typicode.com/posts',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({title: title, body: body})
+            })
+            .then(res=> res.json())
+            .then(data=>console.log(data))
+        });
+    </script>
+</body>
+</html>
+<!--json place holder website: https://jsonplaceholder.typicode.com/>
